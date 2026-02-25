@@ -109,22 +109,50 @@ src/
 npm install
 ```
 
-### 2. Setup Supabase
+### 2. Setup Supabase Database
 
-1. Create project at [Supabase](https://supabase.com)
-2. Run SQL from `supabase-schema.sql` in SQL Editor
-3. Get URL and Anon Key from Settings > API
+**⚠️ PENTING:** Gunakan file `supabase-schema.sql` yang sudah diperbaiki.
 
-### 3. Environment Variables
+1. Buka [Supabase Dashboard](https://supabase.com/dashboard)
+2. Buat project baru atau pilih yang sudah ada
+3. Buka **SQL Editor**
+4. Copy semua isi dari file `supabase-schema.sql`
+5. Paste dan klik **Run**
+6. ✅ Pastikan semua tabel berhasil dibuat
+
+### 3. Create Users
+
+1. Buka **Authentication** → **Users**
+2. Klik **Add User**
+3. Buat 2 user:
+
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@escoklat.com | admin123 |
+| Kasir | kasir@escoklat.com | kasir123 |
+
+4. Set role admin dengan SQL:
+```sql
+UPDATE user_profiles SET role = 'admin' WHERE email = 'admin@escoklat.com';
+```
+
+### 4. Get Supabase Credentials
+
+1. Buka **Settings** → **API**
+2. Copy:
+   - **Project URL**
+   - **anon public** key
+
+### 5. Environment Variables
 
 Create `.env` file:
 
 ```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
-### 4. Run Development
+### 6. Run Development
 
 ```bash
 npm run dev
@@ -132,7 +160,7 @@ npm run dev
 
 Open `http://localhost:5173`
 
-### 5. Build for Production
+### 7. Build for Production
 
 ```bash
 npm run build

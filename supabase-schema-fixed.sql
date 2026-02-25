@@ -325,7 +325,7 @@ ORDER BY month DESC;
 -- NOTES
 -- ============================================
 -- 1. Create users via Supabase Auth UI
--- 2. Update admin role:
+-- 2. Update admin role: 
 --    UPDATE user_profiles SET role = 'admin' WHERE email = 'admin@escoklat.com';
 -- 3. Default credentials:
 --    Admin: admin@escoklat.com / admin123
