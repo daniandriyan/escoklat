@@ -175,10 +175,12 @@ ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 -- ============================================
 -- POLICIES: products
 -- ============================================
+DROP POLICY IF EXISTS "Users can view active products" ON products;
 CREATE POLICY "Users can view active products" ON products
     FOR SELECT
     USING (is_active = true AND auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Admins can manage products" ON products;
 CREATE POLICY "Admins can manage products" ON products
     FOR ALL
     USING (
@@ -192,14 +194,17 @@ CREATE POLICY "Admins can manage products" ON products
 -- ============================================
 -- POLICIES: transactions
 -- ============================================
+DROP POLICY IF EXISTS "Users can view transactions" ON transactions;
 CREATE POLICY "Users can view transactions" ON transactions
     FOR SELECT
     USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Users can create transactions" ON transactions;
 CREATE POLICY "Users can create transactions" ON transactions
     FOR INSERT
     WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Admins can delete transactions" ON transactions;
 CREATE POLICY "Admins can delete transactions" ON transactions
     FOR DELETE
     USING (
@@ -213,10 +218,12 @@ CREATE POLICY "Admins can delete transactions" ON transactions
 -- ============================================
 -- POLICIES: transaction_items
 -- ============================================
+DROP POLICY IF EXISTS "Users can view transaction items" ON transaction_items;
 CREATE POLICY "Users can view transaction items" ON transaction_items
     FOR SELECT
     USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Users can create transaction items" ON transaction_items;
 CREATE POLICY "Users can create transaction items" ON transaction_items
     FOR INSERT
     WITH CHECK (auth.role() = 'authenticated');
@@ -224,10 +231,12 @@ CREATE POLICY "Users can create transaction items" ON transaction_items
 -- ============================================
 -- POLICIES: user_profiles
 -- ============================================
+DROP POLICY IF EXISTS "Users can view own profile" ON user_profiles;
 CREATE POLICY "Users can view own profile" ON user_profiles
     FOR SELECT
     USING (auth.uid() = id);
 
+DROP POLICY IF EXISTS "Admins can view all profiles" ON user_profiles;
 CREATE POLICY "Admins can view all profiles" ON user_profiles
     FOR SELECT
     USING (
@@ -325,8 +334,9 @@ ORDER BY month DESC;
 -- NOTES
 -- ============================================
 -- 1. Create users via Supabase Auth UI
--- 2. Update admin role:
+-- 2. Update admin role: 
 --    UPDATE user_profiles SET role = 'admin' WHERE email = 'admin@escoklat.com';
 -- 3. Default credentials:
 --    Admin: admin@escoklat.com / admin123
 --    Kasir: kasir@escoklat.com / kasir123
+
